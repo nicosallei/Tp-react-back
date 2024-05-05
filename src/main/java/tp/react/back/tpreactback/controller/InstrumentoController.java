@@ -10,17 +10,18 @@ import java.util.List;
 
 @RestController
 //@CrossOrigin(origins = "http://localhost:5173")
+@RequestMapping("/Instrumento")
 public class InstrumentoController {
 
     @Autowired
     private InstrumentoService instruServ;
 
 
-    @GetMapping("/Instrumento/traer-lista")
+    @GetMapping("/traer-lista")
     public List<Instrumento> getInstrumento(){
         return  instruServ.getInstrumento();
     }
-    @GetMapping("/Instrumento/traer/{id}")
+    @GetMapping("/traer/{id}")
     public Instrumento getInstrumento(@PathVariable long id){
         return instruServ.obtenerInstrumento(id);
     }
@@ -31,6 +32,23 @@ public class InstrumentoController {
         instruServ.cargarInstrumentosDesdeJson(rutaArchivo);
         return ResponseEntity.ok("Datos cargados exitosamente en la base de datos.");
     }
+
+    @PostMapping("/guardar")
+    public Instrumento guardarInstrumento(@RequestBody Instrumento instrumento){
+        return instruServ.guardarInstrumento(instrumento);
+    }
+
+    @PutMapping("/actualizar")
+    public Instrumento modificarInstrumento(@RequestBody Instrumento instrumento){
+        return instruServ.modificarInstrumento(instrumento);
+    }
+
+    @DeleteMapping("/borrar/{id}")
+    public void eliminarInstrumento(@PathVariable long id){
+        instruServ.eliminarInstrumento(id);
+    }
+
+
 
 }
 

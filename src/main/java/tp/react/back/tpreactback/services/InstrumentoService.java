@@ -38,5 +38,58 @@ public class InstrumentoService {
         }
     }
 
+    public Instrumento guardarInstrumento(Instrumento instrumento){
+        return instruRepos.save(instrumento);
+    }
+
+    public Instrumento modificarInstrumento(Instrumento instrumento){
+    Instrumento instrumentoNuevo = instruRepos.findById(instrumento.getId());
+
+    if(instrumento.getId() != 0 ){
+        instrumentoNuevo.setId(instrumento.getId());
+    }
+
+    if(instrumento.getInstrumento() != null && !instrumento.getInstrumento().isEmpty()){
+        instrumentoNuevo.setInstrumento(instrumento.getInstrumento());
+    }
+    if (instrumento.getMarca() != null && !instrumento.getMarca().isEmpty()){
+        instrumentoNuevo.setMarca(instrumento.getMarca());
+    }
+
+    if(instrumento.getModelo() != null && !instrumento.getModelo().isEmpty()){
+        instrumentoNuevo.setModelo(instrumento.getModelo());
+    }
+
+    if(instrumento.getPrecio() != 0 ){
+        instrumentoNuevo.setPrecio(instrumento.getPrecio());
+    }
+
+    if(instrumento.getCostoEnvio() != null && !instrumento.getCostoEnvio().isEmpty()){
+        instrumentoNuevo.setCostoEnvio(instrumento.getCostoEnvio());
+    }
+
+    if(instrumento.getCantidadVendida() != 0 ){
+        instrumentoNuevo.setCantidadVendida(instrumento.getCantidadVendida());
+    }
+
+    if (instrumento.getDescripcion() != null && !instrumento.getDescripcion().isEmpty()){
+        instrumentoNuevo.setDescripcion(instrumento.getDescripcion());
+    }
+
+    if (instrumento.getImagen() != null && !instrumento.getImagen().isEmpty()){
+        instrumentoNuevo.setImagen(instrumento.getImagen());
+    }
+
+    if (instrumento.getCategoria() != null) {
+        instrumentoNuevo.setCategoria(instrumento.getCategoria());
+    }
+
+    return instruRepos.save(instrumentoNuevo);
+}
+
+    public void eliminarInstrumento(long id){
+        instruRepos.deleteById(id);
+    }
+
 
 }

@@ -1,8 +1,7 @@
 package tp.react.back.tpreactback.modelo;
 
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,8 +14,13 @@ public class Instrumento {
     private String marca;
     private String modelo;
     private String imagen;
-    private String precio;
+    private double precio;
     private String costoEnvio;
-    private String cantidadVendida;
+    private long cantidadVendida;
     private String descripcion;
+
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
+
 }
