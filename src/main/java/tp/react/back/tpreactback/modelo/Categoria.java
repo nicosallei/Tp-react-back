@@ -8,10 +8,8 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
-public class Categoria {
+public class Categoria extends EntityId{
 
-    @Id
-    private long id;
     private String denominacion;
 
     @Column(unique = true)
