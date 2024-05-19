@@ -2,11 +2,11 @@ package tp.react.back.tpreactback.modelo;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 @Entity
-@Getter@Setter
+@Data
 public class Instrumento extends EntityId{
 
     @Column(length = 2000)
