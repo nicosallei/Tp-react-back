@@ -21,9 +21,9 @@ public class MercadoPagoService {
 
 // Agrega credenciales
         try {
-            MercadoPagoConfig.setAccessToken("TEST-4175185833030904-051819-13d87ce6087754b874fd8e357b5f526f-337084866");
+            MercadoPagoConfig.setAccessToken("TEST-4576129744319093-051923-059a39fac1f4e7ee1d184295f65e521c-337084866");
             PreferenceItemRequest itemRequest = PreferenceItemRequest.builder()
-                    .id("1234")
+                    .id(String.valueOf(pedido.getId()))
                     .title(pedido.getTitulo())
                     .description("Pedido realizado desde el carrito de compras")
                     .pictureUrl("http://picture.com/PS5")
@@ -36,9 +36,9 @@ public class MercadoPagoService {
             items.add(itemRequest);
 
             PreferenceBackUrlsRequest backUrls = PreferenceBackUrlsRequest.builder()
-                    .success("http://localhost:8080/success")
-                    .failure("http://localhost:8080/failure")
-                    .pending("http://localhost:8080/pending")
+                    .success("http://localhost:5173//success")
+                    .failure("http://localhost:5173/failure")
+                    .pending("http://localhost:5173/pending")
                     .build();
 
             PreferenceRequest preferenceRequest = PreferenceRequest.builder()
