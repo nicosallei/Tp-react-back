@@ -1,14 +1,12 @@
 package tp.react.back.tpreactback.modelo;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+
 
 @Entity
-@Setter
-@Getter
+@Data
 public class PedidoDetalle extends EntityId{
 
     private int cantidad;
