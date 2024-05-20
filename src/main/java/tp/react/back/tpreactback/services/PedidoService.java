@@ -36,6 +36,9 @@ public class PedidoService {
             Instrumento instrumento = detalle.getInstrumento();
             if (instrumento != null ) {
                 Instrumento managedInstrumento = instrumentoRepos.findById(instrumento.getId());
+                managedInstrumento.setCantidadVendida(managedInstrumento.getCantidadVendida() + detalle.getCantidad());
+                instrumentoRepos.save(managedInstrumento);
+
                 if (managedInstrumento != null) {
                     detalle.setInstrumento(managedInstrumento);
                     detalle.calcularSubtotal(); // Calcular el subtotal después de establecer el instrumento
@@ -43,6 +46,7 @@ public class PedidoService {
                     throw new RuntimeException("Instrumento no encontrado con ID: " + instrumento.getId());
                 }
             }
+
             total += detalle.getSubtotal();
         }
         pedido.setTotalPedido(total);
@@ -91,4 +95,6 @@ public class PedidoService {
             throw new RuntimeException("Pedido no encontrado");
         }
     }
+
+
 }
