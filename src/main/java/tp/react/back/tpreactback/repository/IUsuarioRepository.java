@@ -7,4 +7,5 @@ import tp.react.back.tpreactback.modelo.Usuario;
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuario, Long> {
     Usuario findByUsername(String username);
+    Usuario findByUsernameAndPassword(String username, String password);
 }

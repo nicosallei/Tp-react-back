@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Roles extends EntityId{
+public class Role extends EntityId{
 
     @Column(nullable = false, unique = true)
     private String name;
