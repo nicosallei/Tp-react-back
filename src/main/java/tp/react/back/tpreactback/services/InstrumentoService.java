@@ -1,9 +1,11 @@
 package tp.react.back.tpreactback.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import tp.react.back.tpreactback.modelo.Categoria;
 import tp.react.back.tpreactback.modelo.Instrumento;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tp.react.back.tpreactback.repository.ICategoriaRepository;
 import tp.react.back.tpreactback.repository.IInstrumentoRepository;
 
 import java.io.File;
@@ -16,6 +18,9 @@ public class InstrumentoService {
 
     @Autowired
     private IInstrumentoRepository instruRepos;
+    @Autowired
+    private ICategoriaRepository categoriaRepository;
+
 
     public  List<Instrumento> getInstrumento(){
         List<Instrumento> listaInstrumento = instruRepos.findAll();
@@ -38,9 +43,15 @@ public class InstrumentoService {
         }
     }
 
-    public Instrumento guardarInstrumento(Instrumento instrumento){
-        return instruRepos.save(instrumento);
+   public Instrumento guardarInstrumento(Instrumento instrumento){
+    if (instrumento.getCategoria() != null && instrumento.getCategoria().getId() != 0){
+        Categoria categoriaPersistente = categoriaRepository.findById(instrumento.getCategoria().getId()).orElse(null);
+        if (categoriaPersistente != null) {
+            instrumento.setCategoria(categoriaPersistente);
+        }
     }
+    return instruRepos.save(instrumento);
+}
 
     public Instrumento modificarInstrumento(Instrumento instrumento){
     Instrumento instrumentoNuevo = instruRepos.findById(instrumento.getId());
