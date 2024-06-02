@@ -8,7 +8,10 @@ import tp.react.back.tpreactback.modelo.PedidoDetalle;
 import tp.react.back.tpreactback.repository.IInstrumentoRepository;
 import tp.react.back.tpreactback.repository.IPedidoRepository;
 
+import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class PedidoService {
@@ -96,5 +99,30 @@ public class PedidoService {
         }
     }
 
+
+    public Map<String, Long> getPedidosGroupedByYearAndMonth() {
+        List<Object[]> results = pedidoRepos.countPedidosGroupedByYearAndMonth();
+        Map<String, Long> pedidosGroupedByYearAndMonth = new HashMap<>();
+        for (Object[] result : results) {
+            String yearAndMonth = result[0] + "-" + result[1];
+            Long count = (Long) result[2];
+            pedidosGroupedByYearAndMonth.put(yearAndMonth, count);
+        }
+        return pedidosGroupedByYearAndMonth;
+    }
+
+    public Map<String, Long> getPedidosGroupedByInstrumento() {
+        List<Object[]> results = pedidoRepos.countPedidosGroupedByInstrumento();
+        Map<String, Long> pedidosGroupedByInstrumento = new HashMap<>();
+        for (Object[] result : results) {
+            String instrumento = (String) result[0];
+            Long count = (Long) result[1];
+            pedidosGroupedByInstrumento.put(instrumento, count);
+        }
+        return pedidosGroupedByInstrumento;
+    }
+    public List<PedidoDetalle> getPedidosEntreFechas(LocalDate fechaDesde, LocalDate fechaHasta) {
+        return pedidoRepos.findPedidosBetweenDates(fechaDesde, fechaHasta);
+    }
 
 }
