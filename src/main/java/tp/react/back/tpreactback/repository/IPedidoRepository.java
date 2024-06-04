@@ -23,5 +23,6 @@ public interface IPedidoRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT pd FROM PedidoDetalle pd WHERE FUNCTION('DATE', pd.pedido.fecha) BETWEEN :fechaDesde AND :fechaHasta")
     List<PedidoDetalle> findPedidosBetweenDates(LocalDate fechaDesde, LocalDate fechaHasta);
 
+    List<Pedido> findByFechaBetween(LocalDate fechaDesde, LocalDate fechaHasta);
 
 }

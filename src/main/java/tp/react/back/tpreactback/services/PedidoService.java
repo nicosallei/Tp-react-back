@@ -121,8 +121,8 @@ public class PedidoService {
         }
         return pedidosGroupedByInstrumento;
     }
-    public List<PedidoDetalle> getPedidosEntreFechas(LocalDate fechaDesde, LocalDate fechaHasta) {
-        return pedidoRepos.findPedidosBetweenDates(fechaDesde, fechaHasta);
-    }
 
+    public List<Pedido> getAllPedidosBetween(LocalDate fechaDesde, LocalDate fechaHasta) {
+        return pedidoRepos.findByFechaBetween(fechaDesde, fechaHasta);
+    }
 }
