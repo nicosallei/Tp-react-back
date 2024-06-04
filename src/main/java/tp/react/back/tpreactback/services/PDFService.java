@@ -5,6 +5,8 @@ import com.lowagie.text.Font;
 import com.lowagie.text.Image;
 import com.lowagie.text.pdf.ColumnText;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import tp.react.back.tpreactback.modelo.Instrumento;
 
@@ -68,7 +70,8 @@ public class PDFService {
             //region Carga de imagen
 
             // Carga la imagen del instrumento
-            Image image = Image.getInstance("C:\\Users\\nicos\\Desktop\\Git\\Laboratorio 4\\Tp-React-front\\public\\images\\" + instrumento.getImagen());
+            Resource resource = new ClassPathResource("images/" + instrumento.getImagen());
+            Image image = Image.getInstance(resource.getURL());
             // Posiciona la imagen
             image.setAbsolutePosition(50f, 570f);
             document.add(image);

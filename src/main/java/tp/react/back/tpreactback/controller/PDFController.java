@@ -14,6 +14,8 @@ import tp.react.back.tpreactback.services.InstrumentoService;
 import tp.react.back.tpreactback.services.PDFService;
 
 import java.io.ByteArrayInputStream;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 @RestController
 @RequestMapping("/PDF")
@@ -23,7 +25,8 @@ public class PDFController {
     @Autowired
     private InstrumentoService instrumentoService;
 
-    @GetMapping(value = "/descarga/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
+
+@GetMapping(value = "/descarga/{id}", produces = MediaType.APPLICATION_PDF_VALUE)
 public ResponseEntity<?> getPdf(@PathVariable long id) {
     try {
         Instrumento instrumento = instrumentoService.obtenerInstrumento(id);
@@ -32,7 +35,9 @@ public ResponseEntity<?> getPdf(@PathVariable long id) {
         byte[] bytes = pdf.readAllBytes();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=instrumento.pdf");
+        String currentDate = LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+        String filename = instrumento.getInstrumento().replaceAll("\\s+","") + "_" + currentDate + ".pdf";
+        headers.add("Content-Disposition", "attachment; filename=" + filename);
 
         return ResponseEntity.ok()
                 .headers(headers)
