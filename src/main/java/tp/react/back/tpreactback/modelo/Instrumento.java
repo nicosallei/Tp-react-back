@@ -3,6 +3,7 @@ package tp.react.back.tpreactback.modelo;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Entity
@@ -20,6 +21,8 @@ public class Instrumento extends EntityId{
     private long cantidadVendida;
     @Column(length = 2000)
     private String descripcion;
+    @Transient // Este campo no se guardará en la base de datos
+    private MultipartFile imagenFile;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "categoria_id")

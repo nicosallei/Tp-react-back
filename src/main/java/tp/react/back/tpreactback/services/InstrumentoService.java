@@ -20,6 +20,8 @@ public class InstrumentoService {
     private IInstrumentoRepository instruRepos;
     @Autowired
     private ICategoriaRepository categoriaRepository;
+    @Autowired
+    private ImagenService imagenService;
 
 
     public  List<Instrumento> getInstrumento(){
@@ -43,19 +45,22 @@ public class InstrumentoService {
         }
     }
 
-   public Instrumento guardarInstrumento(Instrumento instrumento){
-    if (instrumento.getCategoria() != null && instrumento.getCategoria().getId() != 0){
-        Categoria categoriaPersistente = categoriaRepository.findById(instrumento.getCategoria().getId()).orElse(null);
-        if (categoriaPersistente != null) {
-            instrumento.setCategoria(categoriaPersistente);
+    public Instrumento guardarInstrumento(Instrumento instrumento) throws IOException {
+        if (instrumento.getImagenFile() != null && !instrumento.getImagenFile().isEmpty()) {
+            String imagePath = imagenService.saveImage(instrumento.getImagenFile());
+            instrumento.setImagen(imagePath);
         }
+        return instruRepos.save(instrumento);
     }
-    return instruRepos.save(instrumento);
-}
 
-  public Instrumento modificarInstrumento(Long id, Instrumento instrumento){
-    Instrumento instrumentoExistente = instruRepos.findById(id)
-        .orElseThrow(() -> new IllegalArgumentException("No se encontró el instrumento con el ID: " + id));
+    public Instrumento modificarInstrumento(Long id, Instrumento instrumento) throws IOException {
+        Instrumento instrumentoExistente = instruRepos.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró el instrumento con el ID: " + id));
+
+        if (instrumento.getImagenFile() != null && !instrumento.getImagenFile().isEmpty()) {
+            String imagePath = imagenService.saveImage(instrumento.getImagenFile());
+            instrumentoExistente.setImagen(imagePath);
+        }
 
     if(instrumento.getInstrumento() != null && !instrumento.getInstrumento().isEmpty()){
         instrumentoExistente.setInstrumento(instrumento.getInstrumento());
@@ -82,10 +87,6 @@ public class InstrumentoService {
 
     if (instrumento.getDescripcion() != null && !instrumento.getDescripcion().isEmpty()){
         instrumentoExistente.setDescripcion(instrumento.getDescripcion());
-    }
-
-    if (instrumento.getImagen() != null && !instrumento.getImagen().isEmpty()){
-        instrumentoExistente.setImagen(instrumento.getImagen());
     }
 
     if (instrumento.getCategoria() != null) {
