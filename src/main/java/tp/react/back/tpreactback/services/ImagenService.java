@@ -26,6 +26,6 @@ public class ImagenService {
         }
 
         imageFile.transferTo(destinationFile);
-        return destinationFile.toString();
+        return imageFile.getOriginalFilename();
     }
 }
