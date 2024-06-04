@@ -20,20 +20,21 @@ public class ExcelController {
     private ExcelService excelService;
 
     @GetMapping("/download/excel")
-    public ResponseEntity<byte[]> downloadExcel(@RequestParam("fechaDesde") String fechaDesdeStr,
-                                                @RequestParam("fechaHasta") String fechaHastaStr) throws IOException {
-        LocalDate fechaDesde = LocalDate.parse(fechaDesdeStr);
-        LocalDate fechaHasta = LocalDate.parse(fechaHastaStr);
+public ResponseEntity<byte[]> downloadExcel(@RequestParam("fechaDesde") String fechaDesdeStr,
+                                            @RequestParam("fechaHasta") String fechaHastaStr) throws IOException {
+    LocalDate fechaDesde = LocalDate.parse(fechaDesdeStr);
+    LocalDate fechaHasta = LocalDate.parse(fechaHastaStr);
 
-        ByteArrayInputStream in = excelService.pedidosToExcel(fechaDesde, fechaHasta);
-        byte[] bytes = in.readAllBytes();
+    ByteArrayInputStream in = excelService.pedidosToExcel(fechaDesde, fechaHasta);
+    byte[] bytes = in.readAllBytes();
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "attachment; filename=pedidos.xlsx");
+    HttpHeaders headers = new HttpHeaders();
+    String filename = String.format("pedidos(%s-%s).xlsx", fechaDesdeStr, fechaHastaStr);
+    headers.add("Content-Disposition", "attachment; filename=" + filename);
 
-        return ResponseEntity
-                .ok()
-                .headers(headers)
-                .body(bytes);
-    }
+    return ResponseEntity
+            .ok()
+            .headers(headers)
+            .body(bytes);
+}
 }
