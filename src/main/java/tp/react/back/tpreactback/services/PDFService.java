@@ -23,10 +23,11 @@ public class PDFService {
             PdfWriter writer = PdfWriter.getInstance(document, out);
             document.open();
 
+            //region Fuentes
+
             // Crea una fuente de color verde para el texto "Envío Gratis"
             Font greenFont = new Font(Font.HELVETICA, 12, Font.NORMAL);
             greenFont.setColor(Color.GREEN);
-
             // Crea una fuente de color naranja para el costo de envío
             Font orangeFont = new Font(Font.HELVETICA, 12, Font.NORMAL);
             orangeFont.setColor(Color.ORANGE);
@@ -39,13 +40,16 @@ public class PDFService {
             // Crea una fuente de color gris
             Font font2 = new Font(Font.HELVETICA, 12, Font.NORMAL);
             font2.setColor(Color.GRAY);
-            //Crear la logica para poner en verde el precio de envio gratis o si cuesta en naranja
-            // Carga la imagen del icono de envío gratis
+
+           //endregion
+
+            //region Envio
+
             Image iconoEnvioGratis = Image.getInstance("camion.png");
             // Ajusta el tamaño de la imagen
-            iconoEnvioGratis.scaleAbsolute(20f, 20f); // Ajusta estos valores según sea necesario
+            iconoEnvioGratis.scaleAbsolute(20f, 20f);
+            // Ajusta estos valores según sea necesario
 
-            // Ajuste las coordenadas según sea necesario
             Phrase phrase = new Phrase();
             Paragraph costoEnvio;
             if (instrumento.getCostoEnvio().contains("G")) {
@@ -59,36 +63,39 @@ public class PDFService {
             }
             costoEnvio.setAlignment(Element.ALIGN_LEFT);
 
-            // Carga la imagen
+            //endregion
+
+            //region Carga de imagen
+
+            // Carga la imagen del instrumento
             Image image = Image.getInstance("C:\\Users\\nicos\\Desktop\\Git\\Laboratorio 4\\Tp-React-front\\public\\images\\" + instrumento.getImagen());
             // Posiciona la imagen
             image.setAbsolutePosition(50f, 570f);
             document.add(image);
+            //endregion
 
+            //region Texto
             // Crea el texto para el nombre del instrumento con la fuente especificada
             Paragraph nombre = new Paragraph(instrumento.getInstrumento(), titleFont);
             nombre.setAlignment(Element.ALIGN_LEFT);
-
-
             // Crea el texto para la cantidad vendida con la fuente especificada
             Paragraph cantidadVendida = new Paragraph(instrumento.getCantidadVendida() + " vendidas", font2);
             cantidadVendida.setAlignment(Element.ALIGN_LEFT);
-
             // Crea el texto para el precio con la fuente especificada
             Paragraph precio = new Paragraph("$ " + instrumento.getPrecio(), font);
             precio.setAlignment(Element.ALIGN_LEFT);
-
             // Crea el texto para la marca
             Paragraph marca = new Paragraph("Marca: " + instrumento.getMarca());
             marca.setAlignment(Element.ALIGN_LEFT);
-
             // Crea el texto para el modelo
             Paragraph modelo = new Paragraph("Modelo: " + instrumento.getModelo());
             modelo.setAlignment(Element.ALIGN_LEFT);
-
             // Crea el texto para la descripción
             Paragraph descripcion = new Paragraph("Descripción: " + instrumento.getDescripcion());
             descripcion.setAlignment(Element.ALIGN_LEFT); // Cambia la alineación a la izquierda
+            //endregion
+
+            //region Posicion de los textos
 
             // Agrega el texto al documento en posiciones específicas
             ColumnText ct = new ColumnText(writer.getDirectContent());
@@ -107,6 +114,7 @@ public class PDFService {
             ct2.setSimpleColumn(50f, 500f, 570f, 36f); // Ajusta las coordenadas para mover el texto debajo de la imagen
             ct2.addElement(descripcion);
             ct2.go();
+            //endregion
 
             document.close();
         } catch (Exception e) {
