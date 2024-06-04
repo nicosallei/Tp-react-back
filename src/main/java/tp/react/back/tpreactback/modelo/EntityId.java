@@ -15,4 +15,5 @@ public abstract class EntityId implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    private boolean eliminado;
 }

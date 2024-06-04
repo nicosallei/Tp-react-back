@@ -23,6 +23,10 @@ public class InstrumentoController {
     private ImagenService imagenService;
 
 
+    @GetMapping("/traer-todo")
+    public List<Instrumento> traerTodo() throws Exception{
+        return instruServ.traerTodo();
+    }
     @GetMapping("/traer-lista")
     public List<Instrumento> getInstrumento(){
         return  instruServ.getInstrumento();
@@ -61,9 +65,15 @@ public Instrumento modificarInstrumento(@PathVariable Long id, @RequestPart("ins
     return instruServ.modificarInstrumento(id, instrumento);
 }
 
-    @DeleteMapping("/borrar/{id}")
-    public void eliminarInstrumento(@PathVariable long id){
-        instruServ.eliminarInstrumento(id);
+    @DeleteMapping("/estado/{id}")
+    public ResponseEntity<?> eliminarInstrumento(@PathVariable long id){
+        try {
+            return ResponseEntity.ok().body(instruServ.eliminarInstrumento(id));
+        }catch (Exception e){
+            return ResponseEntity.badRequest().body("No se pudo eliminar el instrumento con ID: " + id);
+        }
+
+
     }
 
 

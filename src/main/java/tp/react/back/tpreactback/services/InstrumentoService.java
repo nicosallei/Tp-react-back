@@ -1,6 +1,7 @@
 package tp.react.back.tpreactback.services;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.http.ResponseEntity;
 import tp.react.back.tpreactback.modelo.Categoria;
 import tp.react.back.tpreactback.modelo.Instrumento;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,15 @@ public class InstrumentoService {
     private ImagenService imagenService;
 
 
+    public List<Instrumento> traerTodo() throws Exception{
+        try {
+            return instruRepos.findAll();
+        }catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
     public  List<Instrumento> getInstrumento(){
-        List<Instrumento> listaInstrumento = instruRepos.findAll();
+        List<Instrumento> listaInstrumento = instruRepos.findByEliminadoFalse();
         return listaInstrumento;
     }
 
@@ -96,8 +104,20 @@ public class InstrumentoService {
     return instruRepos.save(instrumentoExistente);
 }
 
-    public void eliminarInstrumento(long id){
-        instruRepos.deleteById(id);
+    public boolean eliminarInstrumento(long id) throws Exception{
+        try {
+            Instrumento instrumento = instruRepos.findById(id);
+            if(instruRepos.existsByIdAndEliminadoFalse(id)){
+                instrumento.setEliminado(true);
+
+            }else{
+                instrumento.setEliminado(false);
+            }
+            instruRepos.save(instrumento);
+            return true;
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
 
