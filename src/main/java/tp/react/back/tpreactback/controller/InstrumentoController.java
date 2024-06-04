@@ -38,9 +38,9 @@ public class InstrumentoController {
         return instruServ.guardarInstrumento(instrumento);
     }
 
-    @PutMapping("/actualizar")
-    public Instrumento modificarInstrumento(@RequestBody Instrumento instrumento){
-        return instruServ.modificarInstrumento(instrumento);
+    @PutMapping("/actualizar/{id}")
+    public Instrumento modificarInstrumento(@PathVariable Long id,@RequestBody Instrumento instrumento){
+        return instruServ.modificarInstrumento(id, instrumento);
     }
 
     @DeleteMapping("/borrar/{id}")
