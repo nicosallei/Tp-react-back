@@ -65,9 +65,8 @@ public class InstrumentoService {
         Instrumento instrumentoExistente = instruRepos.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró el instrumento con el ID: " + id));
 
-        if (instrumento.getImagenFile() != null && !instrumento.getImagenFile().isEmpty()) {
-            String imagePath = imagenService.saveImage(instrumento.getImagenFile());
-            instrumentoExistente.setImagen(imagePath);
+        if (instrumento.getImagen() != null && !instrumento.getImagen().isEmpty()) {
+            instrumentoExistente.setImagen(instrumento.getImagen());
         }
 
     if(instrumento.getInstrumento() != null && !instrumento.getInstrumento().isEmpty()){

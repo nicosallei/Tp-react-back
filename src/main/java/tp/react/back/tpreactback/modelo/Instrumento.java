@@ -24,7 +24,7 @@ public class Instrumento extends EntityId{
     @Transient // Este campo no se guardará en la base de datos
     private MultipartFile imagenFile;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
