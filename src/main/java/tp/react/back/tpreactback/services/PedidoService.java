@@ -112,24 +112,13 @@ public class PedidoService {
     }
 
 
-    public Map<String, Long> getPedidosGroupedByDate() {
-    List<Object[]> results = pedidoRepos.countPedidosGroupedByDate();
-    Map<String, Long> pedidosGroupedByDate = new HashMap<>();
-    for (Object[] result : results) {
-        String date = result[0].toString();
-        Long count = (Long) result[1];
-        pedidosGroupedByDate.put(date, count);
-    }
-    return pedidosGroupedByDate;
-}
-
 public Map<String, Long> getPedidosGroupedByWeek() {
-    List<Object[]> results = pedidoRepos.countPedidosGroupedByWeek();
+    List<Object[]> results = pedidoRepos.countPedidosGroupedByYearMonthAndWeek();
     Map<String, Long> pedidosGroupedByWeek = new HashMap<>();
     for (Object[] result : results) {
-        String yearAndWeek = result[0] + "-W" + result[1];
-        Long count = (Long) result[2];
-        pedidosGroupedByWeek.put(yearAndWeek, count);
+        String yearMonthAndWeek = result[0] + "-" + result[1] + "-W" + result[2];
+        Long count = (Long) result[3];
+        pedidosGroupedByWeek.put(yearMonthAndWeek, count);
     }
     return pedidosGroupedByWeek;
 }

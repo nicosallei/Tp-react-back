@@ -52,10 +52,6 @@ public class PedidoController {
         return pedidoServ.getPedidosGroupedByInstrumento();
     }
 
-    @GetMapping("/grouped-by-date")
-    public Map<String, Long> getPedidosGroupedByDate() {
-        return pedidoServ.getPedidosGroupedByDate();
-    }
 
     @GetMapping("/grouped-by-week")
     public Map<String, Long> getPedidosGroupedByWeek() {
