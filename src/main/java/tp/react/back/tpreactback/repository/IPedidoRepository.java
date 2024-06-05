@@ -25,4 +25,12 @@ public interface IPedidoRepository extends JpaRepository<Pedido, Long> {
 
     List<Pedido> findByFechaBetween(LocalDate fechaDesde, LocalDate fechaHasta);
 
+    @Query("SELECT FUNCTION('DATE', p.fecha) as date, COUNT(p) as count " +
+            "FROM Pedido p GROUP BY FUNCTION('DATE', p.fecha)")
+    List<Object[]> countPedidosGroupedByDate();
+
+    @Query("SELECT FUNCTION('YEAR', p.fecha) as year, FUNCTION('WEEK', p.fecha) as week, COUNT(p) as count " +
+            "FROM Pedido p GROUP BY FUNCTION('YEAR', p.fecha), FUNCTION('WEEK', p.fecha)")
+    List<Object[]> countPedidosGroupedByWeek();
+
 }
