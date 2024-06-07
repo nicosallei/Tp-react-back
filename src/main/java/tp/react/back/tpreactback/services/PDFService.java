@@ -72,7 +72,7 @@ public class PDFService {
             // Carga la imagen del instrumento
             float maxWidth = 200.0f; // Ancho máximo que quieres que tenga la imagen
             float maxHeight = 200.0f; // Altura máxima que quieres que tenga la imagen
-            Resource resource = new ClassPathResource("images/" + instrumento.getImagen());
+            Resource resource = new ClassPathResource("http://localhost:8080/images/" + instrumento.getImagen());
             Image image = Image.getInstance(resource.getURL());
             image.scaleToFit(maxWidth, maxHeight);
             // Posiciona la imagen
